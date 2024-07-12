@@ -73,24 +73,31 @@ def manage_users_window():
         add_user_window = tk.Toplevel()
         add_user_window.title("Ajouter un utilisateur")
 
-        username_label = tk.Label(add_user_window, text="Nom d'utilisateur :")
+        frame = tk.Frame(add_user_window, padx=20, pady=10)
+        frame.pack()
+
+        style = ttk.Style()
+        style.configure('TLabel', font=('Arial', 12), padding=5)
+        style.configure('TEntry', font=('Arial', 12), padding=5)
+        style.configure('TButton', font=('Arial', 12), padding=5)
+
+        username_label = ttk.Label(frame, text="Nom d'utilisateur :", style='TLabel')
         username_label.grid(row=0, column=0, padx=10, pady=5)
-        username_entry = tk.Entry(add_user_window)
+        username_entry = ttk.Entry(frame, style='TEntry')
         username_entry.grid(row=0, column=1, padx=10, pady=5)
 
-        password_label = tk.Label(add_user_window, text="Mot de passe :")
+        password_label = ttk.Label(frame, text="Mot de passe :", style='TLabel')
         password_label.grid(row=1, column=0, padx=10, pady=5)
-        password_entry = tk.Entry(add_user_window, show="*")
+        password_entry = ttk.Entry(frame, show="*", style='TEntry')
         password_entry.grid(row=1, column=1, padx=10, pady=5)
 
-        role_label = tk.Label(add_user_window, text="Rôle :")
+        role_label = ttk.Label(frame, text="Rôle :", style='TLabel')
         role_label.grid(row=2, column=0, padx=10, pady=5)
-        role_var = tk.StringVar(add_user_window)
-        role_var.set("visiteur")  # Valeur par défaut
-        role_dropdown = tk.OptionMenu(add_user_window, role_var, "visiteur", "éditeur", "administrateur")
+        role_var = tk.StringVar()
+        role_dropdown = ttk.Combobox(frame, textvariable=role_var, values=("visiteur", "éditeur", "administrateur"), state="readonly")
         role_dropdown.grid(row=2, column=1, padx=10, pady=5)
 
-        save_button = tk.Button(add_user_window, text="Enregistrer", command=save_user)
+        save_button = ttk.Button(frame, text="Enregistrer", command=save_user, style='TButton')
         save_button.grid(row=3, columnspan=2, pady=10)
 
     def edit_user():
@@ -124,24 +131,36 @@ def manage_users_window():
             edit_user_window = tk.Toplevel()
             edit_user_window.title("Modifier un utilisateur")
 
-            username_label = tk.Label(edit_user_window, text="Nouveau nom d'utilisateur :")
+            frame = tk.Frame(edit_user_window, padx=20, pady=10)
+            frame.pack()
+
+            style = ttk.Style()
+            style.configure('TLabel', font=('Arial', 12), padding=5)
+            style.configure('TEntry', font=('Arial', 12), padding=5)
+            style.configure('TButton', font=('Arial', 12), padding=5)
+
+            current_username = user_list.item(selected_item)['values'][1]
+            current_role = user_list.item(selected_item)['values'][2]
+
+            username_label = ttk.Label(frame, text="Nouveau nom d'utilisateur :", style='TLabel')
             username_label.grid(row=0, column=0, padx=10, pady=5)
-            username_entry = tk.Entry(edit_user_window)
+            username_entry = ttk.Entry(frame, style='TEntry')
+            username_entry.insert(0, current_username)
             username_entry.grid(row=0, column=1, padx=10, pady=5)
 
-            password_label = tk.Label(edit_user_window, text="Nouveau mot de passe :")
+            password_label = ttk.Label(frame, text="Nouveau mot de passe :", style='TLabel')
             password_label.grid(row=1, column=0, padx=10, pady=5)
-            password_entry = tk.Entry(edit_user_window, show="*")
+            password_entry = ttk.Entry(frame, show="*", style='TEntry')
             password_entry.grid(row=1, column=1, padx=10, pady=5)
 
-            role_label = tk.Label(edit_user_window, text="Nouveau rôle :")
+            role_label = ttk.Label(frame, text="Nouveau rôle :", style='TLabel')
             role_label.grid(row=2, column=0, padx=10, pady=5)
-            role_var = tk.StringVar(edit_user_window)
-            role_var.set(user_list.item(selected_item)['values'][2])  # Récupérer le rôle actuel
-            role_dropdown = tk.OptionMenu(edit_user_window, role_var, "visiteur", "éditeur", "administrateur")
+            role_var = tk.StringVar()
+            role_var.set(current_role)
+            role_dropdown = ttk.Combobox(frame, textvariable=role_var, values=("visiteur", "éditeur", "administrateur"), state="readonly")
             role_dropdown.grid(row=2, column=1, padx=10, pady=5)
 
-            save_button = tk.Button(edit_user_window, text="Enregistrer", command=save_changes)
+            save_button = ttk.Button(frame, text="Enregistrer", command=save_changes, style='TButton')
             save_button.grid(row=3, columnspan=2, pady=10)
         else:
             messagebox.showerror("Erreur", "Aucun utilisateur sélectionné.")
@@ -175,75 +194,75 @@ def manage_users_window():
     manage_users_window = tk.Toplevel()
     manage_users_window.title("Gestion des Utilisateurs")
 
-    # Boutons CRUD
     btn_frame = tk.Frame(manage_users_window)
     btn_frame.pack(pady=20)
 
-    add_btn = tk.Button(btn_frame, text="Ajouter un utilisateur", command=add_user)
+    style = ttk.Style()
+    style.configure('TButton', font=('Arial', 12), padding=5)
+
+    add_btn = ttk.Button(btn_frame, text="Ajouter un utilisateur", command=add_user, style='TButton')
     add_btn.grid(row=0, column=0, padx=10)
 
-    edit_btn = tk.Button(btn_frame, text="Modifier un utilisateur", command=edit_user)
+    edit_btn = ttk.Button(btn_frame, text="Modifier un utilisateur", command=edit_user, style='TButton')
     edit_btn.grid(row=0, column=1, padx=10)
 
-    delete_btn = tk.Button(btn_frame, text="Supprimer un utilisateur", command=delete_user)
+    delete_btn = ttk.Button(btn_frame, text="Supprimer un utilisateur", command=delete_user, style='TButton')
     delete_btn.grid(row=0, column=2, padx=10)
 
-    # Tableau des utilisateurs
     user_list_frame = tk.Frame(manage_users_window)
     user_list_frame.pack(padx=20, pady=10)
 
     columns = ("ID", "Nom d'utilisateur", "Rôle")
-    user_list = ttk.Treeview(user_list_frame, columns=columns, show='headings')
-    user_list.heading("ID", text="ID")
-    user_list.heading("Nom d'utilisateur", text="Nom d'utilisateur")
-    user_list.heading("Rôle", text="Rôle")
+    user_list = ttk.Treeview(user_list_frame, columns=columns, show='headings', style='Treeview')
+    for col in columns:
+        user_list.heading(col, text=col)
+        user_list.column(col, minwidth=0, width=200)
     user_list.pack()
 
-    fetch_users()  # Charger les utilisateurs au démarrage de la fenêtre
+    fetch_users()  # Charger les utilisateurs au démarrage
 
-    # Boucler la fenêtre de gestion des utilisateurs
     manage_users_window.mainloop()
 
-# Fonction pour afficher la fenêtre principale de connexion
+# Fonction principale pour la fenêtre de connexion
 def main_window():
     def login():
         username = username_entry.get()
         password = password_entry.get()
 
-        # Authentification de l'utilisateur
         user = authenticate_user(username, password)
-
-        if user is not None and user['role'] == 'administrateur':
-            root.destroy()  # Fermer la fenêtre principale de connexion
+        if user:
+            messagebox.showinfo("Succès", f"Bienvenue, {username} !")
+            main_window.destroy()
             manage_users_window()  # Ouvrir la fenêtre de gestion des utilisateurs
         else:
-            messagebox.showerror("Erreur d'authentification", "Nom d'utilisateur ou mot de passe incorrect.")
+            messagebox.showerror("Erreur", "Nom d'utilisateur ou mot de passe incorrect.")
 
+    main_window = tk.Tk()
+    main_window.title("Connexion")
+    main_window.geometry("400x200")
 
-    # Création de la fenêtre principalea
-    root = tk.Tk()
-    root.title("Gestion des Utilisateurs")
-    root.geometry("400x200")
-
-    # Éléments de la fenêtre principale
-    frame = tk.Frame(root)
+    frame = tk.Frame(main_window)
     frame.pack(pady=20)
 
-    username_label = tk.Label(frame, text="Nom d'utilisateur :")
+    style = ttk.Style()
+    style.configure('TLabel', font=('Arial', 12), padding=5)
+    style.configure('TEntry', font=('Arial', 12), padding=5)
+    style.configure('TButton', font=('Arial', 12), padding=5)
+
+    username_label = ttk.Label(frame, text="Nom d'utilisateur :", style='TLabel')
     username_label.grid(row=0, column=0, padx=10, pady=5)
-    username_entry = tk.Entry(frame)
+    username_entry = ttk.Entry(frame, style='TEntry')
     username_entry.grid(row=0, column=1, padx=10, pady=5)
 
-    password_label = tk.Label(frame, text="Mot de passe :")
+    password_label = ttk.Label(frame, text="Mot de passe :", style='TLabel')
     password_label.grid(row=1, column=0, padx=10, pady=5)
-    password_entry = tk.Entry(frame, show="*")
+    password_entry = ttk.Entry(frame, show="*", style='TEntry')
     password_entry.grid(row=1, column=1, padx=10, pady=5)
 
-    login_button = tk.Button(frame, text="Connexion", command=login)
+    login_button = ttk.Button(frame, text="Connexion", command=login, style='TButton')
     login_button.grid(row=2, columnspan=2, pady=10)
 
-    root.mainloop()
+    main_window.mainloop()
 
-# Appel de la fenêtre principale au lancement de l'application
 if __name__ == "__main__":
     main_window()
