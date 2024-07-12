@@ -73,31 +73,26 @@ def manage_users_window():
         add_user_window = tk.Toplevel()
         add_user_window.title("Ajouter un utilisateur")
 
-        frame = tk.Frame(add_user_window, padx=20, pady=10)
+        frame = tk.Frame(add_user_window, padx=20, pady=10, bg='#f0f0f0')
         frame.pack()
 
-        style = ttk.Style()
-        style.configure('TLabel', font=('Arial', 12), padding=5)
-        style.configure('TEntry', font=('Arial', 12), padding=5)
-        style.configure('TButton', font=('Arial', 12), padding=5)
-
-        username_label = ttk.Label(frame, text="Nom d'utilisateur :", style='TLabel')
+        username_label = tk.Label(frame, text="Nom d'utilisateur :", font=('Arial', 12), bg='#f0f0f0')
         username_label.grid(row=0, column=0, padx=10, pady=5)
-        username_entry = ttk.Entry(frame, style='TEntry')
+        username_entry = tk.Entry(frame, font=('Arial', 12), bg='#e0e0e0')
         username_entry.grid(row=0, column=1, padx=10, pady=5)
 
-        password_label = ttk.Label(frame, text="Mot de passe :", style='TLabel')
+        password_label = tk.Label(frame, text="Mot de passe :", font=('Arial', 12), bg='#f0f0f0')
         password_label.grid(row=1, column=0, padx=10, pady=5)
-        password_entry = ttk.Entry(frame, show="*", style='TEntry')
+        password_entry = tk.Entry(frame, show="*", font=('Arial', 12), bg='#e0e0e0')
         password_entry.grid(row=1, column=1, padx=10, pady=5)
 
-        role_label = ttk.Label(frame, text="Rôle :", style='TLabel')
+        role_label = tk.Label(frame, text="Rôle :", font=('Arial', 12), bg='#f0f0f0')
         role_label.grid(row=2, column=0, padx=10, pady=5)
         role_var = tk.StringVar()
         role_dropdown = ttk.Combobox(frame, textvariable=role_var, values=("visiteur", "éditeur", "administrateur"), state="readonly")
         role_dropdown.grid(row=2, column=1, padx=10, pady=5)
 
-        save_button = ttk.Button(frame, text="Enregistrer", command=save_user, style='TButton')
+        save_button = tk.Button(frame, text="Enregistrer", command=save_user, font=('Arial', 12), bg='#4CAF50', fg='white')
         save_button.grid(row=3, columnspan=2, pady=10)
 
     def edit_user():
@@ -131,36 +126,31 @@ def manage_users_window():
             edit_user_window = tk.Toplevel()
             edit_user_window.title("Modifier un utilisateur")
 
-            frame = tk.Frame(edit_user_window, padx=20, pady=10)
+            frame = tk.Frame(edit_user_window, padx=20, pady=10, bg='#f0f0f0')
             frame.pack()
-
-            style = ttk.Style()
-            style.configure('TLabel', font=('Arial', 12), padding=5)
-            style.configure('TEntry', font=('Arial', 12), padding=5)
-            style.configure('TButton', font=('Arial', 12), padding=5)
 
             current_username = user_list.item(selected_item)['values'][1]
             current_role = user_list.item(selected_item)['values'][2]
 
-            username_label = ttk.Label(frame, text="Nouveau nom d'utilisateur :", style='TLabel')
+            username_label = tk.Label(frame, text="Nouveau nom d'utilisateur :", font=('Arial', 12), bg='#f0f0f0')
             username_label.grid(row=0, column=0, padx=10, pady=5)
-            username_entry = ttk.Entry(frame, style='TEntry')
+            username_entry = tk.Entry(frame, font=('Arial', 12), bg='#e0e0e0')
             username_entry.insert(0, current_username)
             username_entry.grid(row=0, column=1, padx=10, pady=5)
 
-            password_label = ttk.Label(frame, text="Nouveau mot de passe :", style='TLabel')
+            password_label = tk.Label(frame, text="Nouveau mot de passe :", font=('Arial', 12), bg='#f0f0f0')
             password_label.grid(row=1, column=0, padx=10, pady=5)
-            password_entry = ttk.Entry(frame, show="*", style='TEntry')
+            password_entry = tk.Entry(frame, show="*", font=('Arial', 12), bg='#e0e0e0')
             password_entry.grid(row=1, column=1, padx=10, pady=5)
 
-            role_label = ttk.Label(frame, text="Nouveau rôle :", style='TLabel')
+            role_label = tk.Label(frame, text="Nouveau rôle :", font=('Arial', 12), bg='#f0f0f0')
             role_label.grid(row=2, column=0, padx=10, pady=5)
             role_var = tk.StringVar()
             role_var.set(current_role)
             role_dropdown = ttk.Combobox(frame, textvariable=role_var, values=("visiteur", "éditeur", "administrateur"), state="readonly")
             role_dropdown.grid(row=2, column=1, padx=10, pady=5)
 
-            save_button = ttk.Button(frame, text="Enregistrer", command=save_changes, style='TButton')
+            save_button = tk.Button(frame, text="Enregistrer", command=save_changes, font=('Arial', 12), bg='#FFA500', fg='white')
             save_button.grid(row=3, columnspan=2, pady=10)
         else:
             messagebox.showerror("Erreur", "Aucun utilisateur sélectionné.")
@@ -194,26 +184,27 @@ def manage_users_window():
     manage_users_window = tk.Toplevel()
     manage_users_window.title("Gestion des Utilisateurs")
 
-    btn_frame = tk.Frame(manage_users_window)
+    btn_frame = tk.Frame(manage_users_window, bg='#f0f0f0')
     btn_frame.pack(pady=20)
 
-    style = ttk.Style()
-    style.configure('TButton', font=('Arial', 12), padding=5)
-
-    add_btn = ttk.Button(btn_frame, text="Ajouter un utilisateur", command=add_user, style='TButton')
+    add_btn = tk.Button(btn_frame, text="Ajouter un utilisateur", command=add_user, font=('Arial', 12), bg='#4CAF50', fg='white')
     add_btn.grid(row=0, column=0, padx=10)
 
-    edit_btn = ttk.Button(btn_frame, text="Modifier un utilisateur", command=edit_user, style='TButton')
+    edit_btn = tk.Button(btn_frame, text="Modifier un utilisateur", command=edit_user, font=('Arial', 12), bg='#FFA500', fg='white')
     edit_btn.grid(row=0, column=1, padx=10)
 
-    delete_btn = ttk.Button(btn_frame, text="Supprimer un utilisateur", command=delete_user, style='TButton')
+    delete_btn = tk.Button(btn_frame, text="Supprimer un utilisateur", command=delete_user, font=('Arial', 12), bg='#F44336', fg='white')
     delete_btn.grid(row=0, column=2, padx=10)
 
-    user_list_frame = tk.Frame(manage_users_window)
-    user_list_frame.pack(padx=20, pady=10)
+    user_list_frame = tk.Frame(manage_users_window, bg='#f0f0f0')
+    user_list_frame.pack(pady=20)
 
     columns = ("ID", "Nom d'utilisateur", "Rôle")
-    user_list = ttk.Treeview(user_list_frame, columns=columns, show='headings', style='Treeview')
+    style = ttk.Style()
+    style.configure("Treeview.Heading", font=('Arial', 12), background="#4CAF50", foreground="black")
+    style.configure("Treeview", font=('Arial', 10), background="#f0f0f0", foreground="black", fieldbackground="#e0e0e0")
+
+    user_list = ttk.Treeview(user_list_frame, columns=columns, show='headings', style="Treeview")
     for col in columns:
         user_list.heading(col, text=col)
         user_list.column(col, minwidth=0, width=200)
@@ -241,25 +232,20 @@ def main_window():
     main_window.title("Connexion")
     main_window.geometry("400x200")
 
-    frame = tk.Frame(main_window)
+    frame = tk.Frame(main_window, bg='#f0f0f0')
     frame.pack(pady=20)
 
-    style = ttk.Style()
-    style.configure('TLabel', font=('Arial', 12), padding=5)
-    style.configure('TEntry', font=('Arial', 12), padding=5)
-    style.configure('TButton', font=('Arial', 12), padding=5)
-
-    username_label = ttk.Label(frame, text="Nom d'utilisateur :", style='TLabel')
+    username_label = tk.Label(frame, text="Nom d'utilisateur :", font=('Arial', 12), bg='#f0f0f0')
     username_label.grid(row=0, column=0, padx=10, pady=5)
-    username_entry = ttk.Entry(frame, style='TEntry')
+    username_entry = tk.Entry(frame, font=('Arial', 12), bg='#e0e0e0')
     username_entry.grid(row=0, column=1, padx=10, pady=5)
 
-    password_label = ttk.Label(frame, text="Mot de passe :", style='TLabel')
+    password_label = tk.Label(frame, text="Mot de passe :", font=('Arial', 12), bg='#f0f0f0')
     password_label.grid(row=1, column=0, padx=10, pady=5)
-    password_entry = ttk.Entry(frame, show="*", style='TEntry')
+    password_entry = tk.Entry(frame, show="*", font=('Arial', 12), bg='#e0e0e0')
     password_entry.grid(row=1, column=1, padx=10, pady=5)
 
-    login_button = ttk.Button(frame, text="Connexion", command=login, style='TButton')
+    login_button = tk.Button(frame, text="Connexion", command=login, font=('Arial', 12), bg='#2196F3', fg='white')
     login_button.grid(row=2, columnspan=2, pady=10)
 
     main_window.mainloop()
